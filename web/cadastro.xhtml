@@ -6,7 +6,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://java.sun.com/jstl/core"> <!-- IGNORAR ERRO, BUG DO NETBEANS -->
     <h:head>
-        <title>Inicio</title>
+        <title>Cadastro</title>
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> </meta>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"></link>
     </h:head>
@@ -17,23 +17,26 @@
         <div class="container mt-5">
             <div class="row justify-content-center">
                 <div class="col-xs-12">
-                    <c:if test='${sessionManagedBean.wrongLogin}'> <!-- IGNORAR ERRO, BUG DO NETBEANS -->
-                        <p style="color: red;">E-mail ou Senha incorretos.</p>
+                    <c:if test='${sessionManagedBean.emailBeingUsed}'> <!-- IGNORAR ERRO, BUG DO NETBEANS -->
+                        <p style="color: red;">E-mail já cadastrado.</p>
                     </c:if> <!-- IGNORAR ERRO, BUG DO NETBEANS -->
                     <h:form>
                         <div class="form-group">
+                            <label for="exampleInputEmail1">Nome</label>
+                            <h:inputText value="#{sessionManagedBean.nome}" a:type="text" required="true" class="form-control"> </h:inputText>
+                        </div>
+                        <div class="form-group">
                             <label for="exampleInputEmail1">E-mail</label>
-                            <h:inputText value="#{sessionManagedBean.email}" required="true" a:type="email" class="form-control"> </h:inputText>
+                            <h:inputText value="#{sessionManagedBean.email}" a:type="email" required="true" class="form-control"> </h:inputText>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Senha</label>
-                            <h:inputText value="#{sessionManagedBean.senha}" required="true" a:type="password" class="form-control"> </h:inputText>                        </div>
-                        <h:commandButton action="${sessionManagedBean.login()}" class="btn btn-primary"
-                                         value="Login" />                    
+                            <h:inputText value="#{sessionManagedBean.senha}" a:type="password" required="true" class="form-control"> </h:inputText>
+                        </div>
+                        <h:commandButton action="${sessionManagedBean.cadastro()}" class="btn btn-primary"
+                                         value="Cadastrar" />                    
                     </h:form>
                     <hr />
-                    <h:link outcome="cadastro" value="Cadastrar" class="btn btn-primary"/>
-
                 </div>    
             </div>
         </div>`
