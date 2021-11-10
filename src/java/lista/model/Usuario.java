@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -29,14 +30,17 @@ import javax.persistence.Table;
 })
 @Table(name = "usuarios")
 public class Usuario implements Serializable {
-    
+
     private static final long serialVersionUID = -5892169641074303723L;
-    
+
+    @Id
+    @GeneratedValue
+    private long id;
     @Column(name = "nome", nullable = false, length = 255)
     private String nome;
     @Column(name = "senha", nullable = false, length = 255)
     private String senha;
-    
+
     @Id
     @Column(name = "email", nullable = false, length = 255)
     private String email;
