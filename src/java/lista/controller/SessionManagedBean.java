@@ -87,6 +87,15 @@ public class SessionManagedBean implements Serializable {
             wrongLogin = true;
         }
     }
+    
+//    public void alterarCadastro(String senha, String confirmacaoSenha){
+//        /*
+//                VALIDAR SENHAS IGUAIS
+//                VERIFICAR NOME PREENCHIDO
+//                VERIFICAR EMAIL VÁLIDO
+//        */
+//        return;
+//    }
 
     public String getEmail() {
         return email;
