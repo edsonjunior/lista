@@ -12,16 +12,16 @@
         <ui:include src="menuprincipal.xhtml"/>
         
         <p:outputPanel style="margin-left: auto; margin-right: auto; width: 1024px; align-items: center;">
+            
+        <b:growl id="gro" delay="4000"/>
         
         <b:form id="formUserInfo">                
             <b:row>
                 <b:column span="6">
-                    <h:outputText value="Email"/>
-                    <!--<h:outputText value="Email"/><b:inputText value="# {sessionManagedBean.email}"/>-->
+                    <h:outputText value="Email"/><b:inputText value="#{email}"/>
                 </b:column>
                 <b:column span="6">
-                    <h:outputText value="Nome"/>
-                    <!--<h:outputText value="Nome"/><b:inputText value="# {sessionManagedBean.nome}"/>-->
+                    <h:outputText value="Nome"/><b:inputText value="#{nome}"/>
                 </b:column>
             </b:row> 
             <b:row>
@@ -32,8 +32,8 @@
                     <h:outputText value="Confirmação de Senha"/><b:inputSecret value="#{confirmacaoSenha}"/>
                 </b:column>
             </b:row>
-            <b:commandButton value="Salvar"/>
-            <!--<b:commandButton value="Salvar" action="# {sessionManagedBean.alterarCadastro()}"/>-->
+            <!--<b:commandButton value="Salvar"/>-->
+            <b:commandButton value="Salvar" action="#{sessionManagedBean.alterarCadastro(email,nome,senha,confirmacaoSenha)}"/>
 
         </b:form>
             

@@ -34,7 +34,7 @@ public class SessionSessionBean implements Serializable {
         }
         return null;
     }
-
+    
     public Usuario loginUsuario(String email, String senha) {
         Usuario usuario = usuarioRepositorio.getByEmailAndPassword(email, senha);
         return usuario;

@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -88,14 +89,17 @@ public class SessionManagedBean implements Serializable {
         }
     }
     
-//    public void alterarCadastro(String senha, String confirmacaoSenha){
-//        /*
-//                VALIDAR SENHAS IGUAIS
-//                VERIFICAR NOME PREENCHIDO
-//                VERIFICAR EMAIL VÁLIDO
-//        */
-//        return;
-//    }
+    public void alterarCadastro(String email, String nome, String senha, String confirmacaoSenha){
+        
+        if(!senha.equals(confirmacaoSenha)){
+            FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR,"Senhas não são iguais!","Senhas não são iguais!"));
+        }else{
+            //SETAR NOVOS DADOS
+        }
+        return;
+        
+        
+    }
 
     public String getEmail() {
         return email;
