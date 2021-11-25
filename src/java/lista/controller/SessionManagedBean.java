@@ -104,8 +104,7 @@ public class SessionManagedBean implements Serializable {
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
             Map<String, Object> sessionMap = externalContext.getSessionMap();
             sessionMap.put("User", currentUser);
-            System.out.println(email + nome + senha+ currentUser.getId());
-        }
+          }
         return;
         
         
