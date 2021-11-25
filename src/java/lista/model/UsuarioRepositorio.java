@@ -40,6 +40,17 @@ public class UsuarioRepositorio {
         }
         return false;
     }
+    
+     public boolean updateUsuario(Usuario usuario) {
+        Usuario userSameEmail = getByEmail(usuario.getEmail());
+
+        if (userSameEmail == null) {
+            this.entityManager.merge(usuario);
+            this.entityManager.flush();
+            return true;
+        }
+        return false;
+    }
 
     public Usuario getByEmailAndPassword(String email, String senha) {
         Usuario usuario = null;

@@ -29,6 +29,7 @@ public class SessionManagedBean implements Serializable {
     String nome;
     String email;
     String senha;
+    String confirmacaoSenha;
     Usuario currentUser;
     boolean isLoggedIn = false;
     boolean wrongLogin = false;
@@ -70,12 +71,13 @@ public class SessionManagedBean implements Serializable {
             wrongLogin = false;
             isLoggedIn = true;
             try {
-                try {
-                    request.login(email, senha);
-                } catch (ServletException ex) {
-                    Logger.getLogger(SessionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                Principal principal = request.getUserPrincipal();
+//                try {
+//                    System.out.println(email + senha);
+//                    request.login(email, senha);
+//                } catch (ServletException ex) {
+//                    Logger.getLogger(SessionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//                Principal principal = request.getUserPrincipal();
                 ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
                 Map<String, Object> sessionMap = externalContext.getSessionMap();
                 sessionMap.put("User", currentUser);
@@ -94,7 +96,15 @@ public class SessionManagedBean implements Serializable {
         if(!senha.equals(confirmacaoSenha)){
             FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR,"Senhas não são iguais!","Senhas não são iguais!"));
         }else{
-            //SETAR NOVOS DADOS
+            //SETAR NOVOS 
+            currentUser.setNome(nome);
+            currentUser.setEmail(email);
+            currentUser.setSenha(senha);
+            currentUser = cSessionBean.updateUsuario(currentUser);
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            Map<String, Object> sessionMap = externalContext.getSessionMap();
+            sessionMap.put("User", currentUser);
+            System.out.println(email + nome + senha+ currentUser.getId());
         }
         return;
         
@@ -153,6 +163,16 @@ public class SessionManagedBean implements Serializable {
     public void setEmailBeingUsed(boolean emailBeingUsed) {
         this.emailBeingUsed = emailBeingUsed;
     }
+
+    public String getConfirmacaoSenha() {
+        return confirmacaoSenha;
+    }
+
+    public void setConfirmacaoSenha(String confirmacaoSenha) {
+        this.confirmacaoSenha = confirmacaoSenha;
+    }
+    
+    
 
     
 }

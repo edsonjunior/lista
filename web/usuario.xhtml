@@ -18,18 +18,18 @@
         <b:form id="formUserInfo">                
             <b:row>
                 <b:column span="6">
-                    <h:outputText value="Email"/><b:inputText value="#{email}"/>
+                    <h:outputText value="Email"/><b:inputText value="#{email}" required="true" type="email"/>
                 </b:column>
                 <b:column span="6">
-                    <h:outputText value="Nome"/><b:inputText value="#{nome}"/>
+                    <h:outputText value="Nome"/><b:inputText required="true" value="#{nome}"/>
                 </b:column>
             </b:row> 
             <b:row>
                 <b:column span="6">
-                    <h:outputText value="Confirmação de Senha"/><b:inputSecret value="#{senha}"/>
+                    <h:outputText value="Confirmação de Senha"/><b:inputSecret required="true" value="#{senha}"/>
                 </b:column>
                 <b:column span="6">
-                    <h:outputText value="Confirmação de Senha"/><b:inputSecret value="#{confirmacaoSenha}"/>
+                    <h:outputText value="Confirmação de Senha"/><b:inputSecret  required="true" value="#{confirmacaoSenha}"/>
                 </b:column>
             </b:row>
             <!--<b:commandButton value="Salvar"/>-->

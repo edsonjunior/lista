@@ -41,7 +41,6 @@ public class Usuario implements Serializable {
     @Column(name = "senha", nullable = false, length = 255)
     private String senha;
 
-    @Id
     @Column(name = "email", nullable = false, length = 255)
     private String email;
 
@@ -73,7 +72,13 @@ public class Usuario implements Serializable {
     }
 
     public void setSenha(String senha) {
-        this.senha = senha;
+        try {
+            this.senha = AuthenticationUtils.encodeSHA256(senha);
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public String getEmail() {
@@ -83,5 +88,15 @@ public class Usuario implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+    
+    
 
 }

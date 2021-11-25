@@ -35,6 +35,18 @@ public class SessionSessionBean implements Serializable {
         return null;
     }
     
+    public Usuario updateUsuario(Usuario usuario) {
+        try {
+            
+            boolean updated = usuarioRepositorio.updateUsuario(usuario);;
+            if(updated) {
+                return usuario;   
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
     public Usuario loginUsuario(String email, String senha) {
         Usuario usuario = usuarioRepositorio.getByEmailAndPassword(email, senha);
         return usuario;
