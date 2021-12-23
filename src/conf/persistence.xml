@@ -3,6 +3,7 @@
   <persistence-unit name="listaPU" transaction-type="JTA">
     <jta-data-source>java:app/lista</jta-data-source>
     <class>lista.model.Usuario</class>
+    <class>lista.model.ListaDeCompras</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

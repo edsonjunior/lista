@@ -170,6 +170,10 @@ public class SessionManagedBean implements Serializable {
     public void setConfirmacaoSenha(String confirmacaoSenha) {
         this.confirmacaoSenha = confirmacaoSenha;
     }
+
+    public Usuario getCurrentUser() {
+        return currentUser;
+    }
     
     
 

@@ -9,14 +9,20 @@ import aula.AuthenticationUtils;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -25,7 +31,8 @@ import javax.persistence.Table;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findUserByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email"),
+    @NamedQuery(name = "findUserByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")
+    ,
     @NamedQuery(name = "findUserByEmailAndPassword", query = "SELECT u FROM Usuario u WHERE u.email = :email AND u.senha = :senha")
 })
 @Table(name = "usuarios")
@@ -43,6 +50,9 @@ public class Usuario implements Serializable {
 
     @Column(name = "email", nullable = false, length = 255)
     private String email;
+
+    @ManyToMany(mappedBy = "usuarios")
+    private Set<ListaDeCompras> listasUsuario = new HashSet<ListaDeCompras>();
 
     public Usuario() {
     }
@@ -96,7 +106,13 @@ public class Usuario implements Serializable {
     public void setId(long id) {
         this.id = id;
     }
-    
-    
+
+    public Set<ListaDeCompras> getListas() {
+        return listasUsuario;
+    }
+
+    public void setListas(Set<ListaDeCompras> listas) {
+        this.listasUsuario = listas;
+    }
 
 }
