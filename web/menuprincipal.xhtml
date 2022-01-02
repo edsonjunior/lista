@@ -11,9 +11,9 @@
             <b:navBar brand="Listas">
                 <b:row style="text-align: center;">
                     <b:navbarLinks>
-                        <b:navLink value="Início" href="index.xhtml"/>   
+                        <b:navLink value="Minhas Listas" href="dashboard.xhtml"/>   
                         <b:navLink value="Meu Cadastro" href="usuario.xhtml"/>   
-                        <b:navLink value="Sair"/>                   
+                        <b:navLink value="Sair" action="${sessionManagedBean.logout()}" href="index.xhtml"/>                   
                     </b:navbarLinks>
                 </b:row>
             </b:navBar>          

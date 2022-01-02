@@ -1,63 +1,85 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:b="http://bootsfaces.net/ui"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"> <!-- IGNORAR ERRO, BUG DO NETBEANS -->
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <h:body>
-        <ui:include src="menuprincipal.xhtml"/>
-        <b:container fluid="true">
+   xmlns:h="http://xmlns.jcp.org/jsf/html"
+   xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+   xmlns:b="http://bootsfaces.net/ui"
+   xmlns:f="http://java.sun.com/jsf/core"
+   xmlns:c="http://java.sun.com/jsp/jstl/core"
+   xmlns:p="http://primefaces.org/ui">
+   <h:head>
+      <title>Listas</title>
+      <h:outputStylesheet name="estilos.css" library="css" />
+   </h:head>
+   <h:body>
+      <p:outputPanel style="margin-left: auto; margin-right: auto; width: 1024px; align-items: center;">
+         <ui:include src="menuprincipal.xhtml"/>
+         <b:container fluid="true">
             <b:row>
-                <b:column span="12">
-                    <button id="btrigger" class="btn btn-info btn-lg" data-target="#amodal" data-toggle="modal">Criar Lista de Compra</button>
-                </b:column>
+               <b:column span="12">
+                  <h3>Minhas Listas</h3>
+                  <p>
+                     <b:commandLink value="Criar Lista" oncomplete="$('#amodal').modal()" ajax="true"/>
+                  </p>
+               </b:column>
             </b:row>
             <b:row>
-                <c:forEach items="${listaComprasManagedBean.getListasDeCompras(sessionManagedBean.currentUser)}" var="lista">
-                    <b:column span="3">
-                        <b:panel title="#{lista.nome}" look="primary">
-                            <b:row>
-                                <p>#{lista.descricao}</p>
-                            </b:row>
-                            <b:row>
-                                <h:form>
-                                    <h:commandButton action="${listaComprasManagedBean.setEditConfig(lista.getId(), lista.getNome(), lista.getDescricao())}" class="btn btn-danger btn-md" value="Alterar Lista"/>
-                                    <h:commandButton action="${listaComprasManagedBean.deleteLista(lista)}" class="btn btn-danger btn-md" value="Deletar Lista"/>
-                                </h:form>
-                            </b:row>
-                        </b:panel>
-                    </b:column>
-                </c:forEach>
+               <c:forEach items="${listaComprasManagedBean.getListasDeCompras(sessionManagedBean.currentUser)}" var="lista">
+                  <b:column span="3">
+                     <b:panel title="#{lista.nome}" style="border: 1px solid #f5f5f5;" look="">
+                        <b:row>
+                           #{lista.descricao}
+                        </b:row>
+                        <f:facet name="footer">
+                           <b:row class="centralizar">
+                              <b:form>
+                                 <b:commandButton class="botao-transparente" icon="pencil" value="Alterar"
+                                    action="${listaComprasManagedBean.setEditConfig(lista.getId(), lista.getNome(), lista.getDescricao())}"
+                                    oncomplete="$('.modalaltera').modal()" update=":formUsuario:modalAltera"/>
+                                 <b:commandButton class="botao-transparente" icon="trash" value="Apagar"
+                                    action="${listaComprasManagedBean.deleteLista(lista)}"/>
+                              </b:form>
+                           </b:row>
+                        </f:facet>
+                     </b:panel>
+                  </b:column>
+               </c:forEach>
             </b:row>
-        </b:container>
-
-
-
-
-
-
-        <b:modal id="amodal" title="Criar Lista" styleClass="modalPseudoClass">
-            <b:form id="formUserInfo">                
-                <b:row>
-                    <b:column span="12">
-                        <h:outputText value="Título"/><b:inputText value="#{listaComprasManagedBean.nome}" required="true" type="text"/>
-                    </b:column>
-                    <b:column span="12">
-                        <b:inputTextarea label="Descrição" value="#{listaComprasManagedBean.descricao}">
-                        </b:inputTextarea>
-                    </b:column>
-                </b:row>
-                <b:button value="Fechar" dismiss="modal" />
-                <b:commandButton value="Salvar" action="#{listaComprasManagedBean.handleSubmit(sessionManagedBean.getCurrentUser())}"/>
-
-
-            </b:form>
-        </b:modal>
-    </h:body>
+         </b:container>
+      </p:outputPanel>
+      <!-- MODAL DE ALTERAÇÃO -->
+      <b:form id="formUsuario">
+         <b:modal id="modalAltera" title="Alterar Lista" class="modalaltera">
+            <b:panelGrid columns="1">
+               <h:outputText value="Nome:"/>
+               <b:inputText value="#{listaComprasManagedBean.nome}"/>
+               
+               <b:inputTextarea label="Descrição" value="#{listaComprasManagedBean.descricao}">
+               </b:inputTextarea>
+               
+            </b:panelGrid>
+            <b:button value="Fechar" dismiss="modal" />
+            <b:commandButton value="Salvar" action="#{listaComprasManagedBean.handleSubmit(sessionManagedBean.currentUser)}"/>
+         </b:modal>
+      </b:form>
+      
+      
+      <!-- MODAL DE CRIAÇÃO -->
+      <b:modal id="amodal" title="Criar Lista" styleClass="modalPseudoClass">
+         <b:form id="formUserInfo">
+            <b:row>
+               <b:column span="12">
+                  <h:outputText value="Título"/>
+                  <b:inputText value="#{listaComprasManagedBean.nome}" required="true" type="text"/>
+               </b:column>
+               <b:column span="12">
+                  <b:inputTextarea label="Descrição" value="#{listaComprasManagedBean.descricao}">
+                  </b:inputTextarea>
+               </b:column>
+            </b:row>
+            <b:button value="Fechar" dismiss="modal" />
+            <b:commandButton value="Salvar" action="#{listaComprasManagedBean.handleSubmit(sessionManagedBean.getCurrentUser())}"/>
+         </b:form>
+      </b:modal>
+   </h:body>
 </html>
-

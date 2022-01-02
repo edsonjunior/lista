@@ -1,0 +1,41 @@
+.bodybg {
+    background-image: url("#{resource['images/background.png']}");
+    background-size: cover;
+    background-repeat: no-repeat; 
+    background-attachment:fixed;
+}
+
+.centralizar{
+    align-items: center;
+    text-align: center;
+}
+
+.botao-transparente{
+    border:none !important;
+    background-color: transparent !important;
+}
+
+.containerCentralizado{   
+    margin-left: auto;
+    margin-right: auto;    
+    width: 1024px;    
+    align-items: center
+}
+
+.espacoPadraoTopBottom{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.floatRight{
+    float:right;    
+}
+
+.semBorda tr,
+.semBorda td {
+    border: none !important;
+}
+
+.fullWidth{
+    width: 100%;
+}
