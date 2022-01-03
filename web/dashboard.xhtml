@@ -12,21 +12,22 @@
       <h:outputStylesheet name="estilos.css" library="css" />
    </h:head>
    <h:body>
-      <p:outputPanel style="margin-left: auto; margin-right: auto; width: 1024px; align-items: center;">
+      <div style="margin-left: auto; margin-right: auto; width: 1024px; align-items: center;">
          <ui:include src="menuprincipal.xhtml"/>
          <b:container fluid="true">
             <b:row>
                <b:column span="12">
-                  <h3>Minhas Listas</h3>
-                  <p>
+                  <span>
                      <b:commandLink value="Criar Lista" oncomplete="$('#amodal').modal()" ajax="true"/>
-                  </p>
+                  </span>
+                  <br/>
+                  <h3>Minhas Listas Privadas</h3>                  
                </b:column>
             </b:row>
             <b:row>
-               <c:forEach items="${listaComprasManagedBean.getListasDeCompras(sessionManagedBean.currentUser)}" var="lista">
+               <c:forEach items="${listaComprasManagedBean.getListasDeComprasPrivadas(sessionManagedBean.currentUser)}" var="lista">
                   <b:column span="3">
-                     <b:panel title="#{lista.nome}" style="border: 1px solid #f5f5f5;" look="">
+                     <b:panel title="#{lista.nome}" look="primary">
                         <b:row>
                            #{lista.descricao}
                         </b:row>
@@ -34,7 +35,7 @@
                            <b:row class="centralizar">
                               <b:form>
                                  <b:commandButton class="botao-transparente" icon="pencil" value="Alterar"
-                                    action="${listaComprasManagedBean.setEditConfig(lista.getId(), lista.getNome(), lista.getDescricao())}"
+                                    action="${listaComprasManagedBean.setEditConfig(lista.getId(), lista.getNome(), lista.getDescricao(), lista.getIspublic())}"
                                     oncomplete="$('.modalaltera').modal()" update=":formUsuario:modalAltera"/>
                                  <b:commandButton class="botao-transparente" icon="trash" value="Apagar"
                                     action="${listaComprasManagedBean.deleteLista(lista)}"/>
@@ -45,24 +46,65 @@
                   </b:column>
                </c:forEach>
             </b:row>
+            <b:row>
+               <b:column span="12">
+                  <h3>Minhas Listas Públicas</h3>
+               </b:column>
+            </b:row>
+            <b:row>
+               <c:forEach items="${listaComprasManagedBean.getListasDeComprasCompartilhadas(sessionManagedBean.currentUser)}" var="listac">
+                  <b:column span="3">
+                     <b:panel title="#{listac.nome}" look="primary">
+                        <b:row>
+                           #{listac.descricao}
+                        </b:row>
+                        <f:facet name="footer">
+                           <b:row class="centralizar">
+                              <b:form>
+                                 <b:commandButton class="botao-transparente" icon="pencil" value="Alterar"
+                                    action="${listaComprasManagedBean.setEditConfig(listac.getId(), listac.getNome(), listac.getDescricao(), listac.getIspublic())}"
+                                    oncomplete="$('.modalaltera').modal()" update=":formUsuario:modalAltera"/>
+                                 <b:commandButton class="botao-transparente" icon="trash" value="Apagar"
+                                    action="${listaComprasManagedBean.deleteLista(listac)}"/>
+                              </b:form>
+                           </b:row>
+                        </f:facet>
+                     </b:panel>
+                  </b:column>
+               </c:forEach>
+            </b:row>
+            <b:row>
+               <b:column span="12">
+                  <h3>Listas Públicas Gerais</h3>
+               </b:column>
+            </b:row>
+            <b:row>
+               <c:forEach items="${listaComprasManagedBean.getListasDeComprasCompartilhadasGerais()}" var="listacg">
+                  <b:column span="3">
+                     <b:panel title="#{listacg.nome}" look="primary">
+                        <b:row>
+                           #{listacg.descricao}
+                        </b:row>
+                     </b:panel>
+                  </b:column>
+               </c:forEach>
+            </b:row>
          </b:container>
-      </p:outputPanel>
+      </div>
+       
       <!-- MODAL DE ALTERAÇÃO -->
       <b:form id="formUsuario">
          <b:modal id="modalAltera" title="Alterar Lista" class="modalaltera">
             <b:panelGrid columns="1">
                <h:outputText value="Nome:"/>
                <b:inputText value="#{listaComprasManagedBean.nome}"/>
-               
                <b:inputTextarea label="Descrição" value="#{listaComprasManagedBean.descricao}">
                </b:inputTextarea>
-               
             </b:panelGrid>
             <b:button value="Fechar" dismiss="modal" />
             <b:commandButton value="Salvar" action="#{listaComprasManagedBean.handleSubmit(sessionManagedBean.currentUser)}"/>
          </b:modal>
       </b:form>
-      
       
       <!-- MODAL DE CRIAÇÃO -->
       <b:modal id="amodal" title="Criar Lista" styleClass="modalPseudoClass">
@@ -76,10 +118,14 @@
                   <b:inputTextarea label="Descrição" value="#{listaComprasManagedBean.descricao}">
                   </b:inputTextarea>
                </b:column>
+               <b:column span="12">
+                  <b:selectBooleanCheckbox value="#{listaComprasManagedBean.ispublic}" caption="Pública" />
+               </b:column>
             </b:row>
             <b:button value="Fechar" dismiss="modal" />
             <b:commandButton value="Salvar" action="#{listaComprasManagedBean.handleSubmit(sessionManagedBean.getCurrentUser())}"/>
          </b:form>
       </b:modal>
+      
    </h:body>
 </html>

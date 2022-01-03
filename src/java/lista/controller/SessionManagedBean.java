@@ -105,9 +105,8 @@ public class SessionManagedBean implements Serializable {
             Map<String, Object> sessionMap = externalContext.getSessionMap();
             sessionMap.put("User", currentUser);
           }
-        return;
         
-        
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Usuário alterado com sucesso!"));
     }
 
     public String getEmail() {

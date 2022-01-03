@@ -33,10 +33,11 @@ public class ListaDeComprasRepositorio {
         this.entityManager.flush();
     }
     
-     public void updateLista(long editId, String nome, String descricao) {
+     public void updateLista(long editId, String nome, String descricao, Boolean ispublic) {
         ListaDeCompras lista = entityManager.find(ListaDeCompras.class, editId);
         lista.setDescricao(descricao);
         lista.setNome(nome);
+        lista.setIspublic(ispublic);
         this.entityManager.merge(lista);
         this.entityManager.flush();
     }
@@ -46,6 +47,41 @@ public class ListaDeComprasRepositorio {
 
         try {
             TypedQuery<ListaDeCompras> query = this.entityManager.createNamedQuery("findListByUser", ListaDeCompras.class);
+            query.setParameter("id", user.getId());
+            li = query.getResultList();
+        } catch (Exception e) {
+        }
+        return li;
+    }
+    
+    public List<ListaDeCompras> getListaSharedByUser(Usuario user) {
+        List<ListaDeCompras> li = null;
+
+        try {
+            TypedQuery<ListaDeCompras> query = this.entityManager.createNamedQuery("findListSharedByUser", ListaDeCompras.class);
+            query.setParameter("id", user.getId());
+            li = query.getResultList();
+        } catch (Exception e) {
+        }
+        return li;
+    }
+            
+    public List<ListaDeCompras> getListaSharedByUserGeneral() {
+        List<ListaDeCompras> li = null;
+
+        try {
+            TypedQuery<ListaDeCompras> query = this.entityManager.createNamedQuery("findListSharedByUserGeneral", ListaDeCompras.class);
+            li = query.getResultList();
+        } catch (Exception e) {
+        }
+        return li;
+    }      
+    
+    public List<ListaDeCompras> getListaPrivateByUser(Usuario user) {
+        List<ListaDeCompras> li = null;
+
+        try {
+            TypedQuery<ListaDeCompras> query = this.entityManager.createNamedQuery("findListPrivateByUser", ListaDeCompras.class);
             query.setParameter("id", user.getId());
             li = query.getResultList();
         } catch (Exception e) {

@@ -33,6 +33,7 @@ public class ListaComprasManagedBean implements Serializable {
     long idEdit = 0;
     String nome;
     String descricao;
+    boolean ispublic;
    
 
     public void criarLista(Usuario currentUser) {
@@ -40,7 +41,7 @@ public class ListaComprasManagedBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 
         try {
-            cListaBean.addLista(nome, descricao, currentUser);
+            cListaBean.addLista(nome, descricao, ispublic, currentUser);
             FacesContext.getCurrentInstance().getExternalContext().redirect("/lista/dashboard.xhtml");
         } catch (IOException ex) {
             Logger.getLogger(SessionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -53,7 +54,7 @@ public class ListaComprasManagedBean implements Serializable {
 
         try {
             
-            cListaBean.editLista(idEdit, nome, descricao);
+            cListaBean.editLista(idEdit, nome, descricao, ispublic);
             FacesContext.getCurrentInstance().getExternalContext().redirect("/lista/dashboard.xhtml");
         } catch (IOException ex) {
             Logger.getLogger(SessionManagedBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -69,8 +70,19 @@ public class ListaComprasManagedBean implements Serializable {
     }
     
     public List<ListaDeCompras> getListasDeCompras(Usuario user) {
-
         return cListaBean.getListaByUser(user);
+    }
+    
+    public List<ListaDeCompras> getListasDeComprasPrivadas(Usuario user) {
+        return cListaBean.getListaPrivateByUser(user);
+    }
+    
+    public List<ListaDeCompras> getListasDeComprasCompartilhadas(Usuario user) {
+        return cListaBean.getListaSharedByUser(user);
+    }
+    
+    public List<ListaDeCompras> getListasDeComprasCompartilhadasGerais() {
+        return cListaBean.getListaSharedByUserGeneral();
     }
     
     public void deleteLista(ListaDeCompras lista) {
@@ -99,14 +111,20 @@ public class ListaComprasManagedBean implements Serializable {
 
     public void setIdEdit(long idEdit) {
         this.idEdit = idEdit;
+    }    
+    
+    public boolean getIspublic() {
+        return ispublic;
     }
 
-    public void setEditConfig(long idEdit, String nome, String descricao) {
+    public void setIspublic(boolean ispublic) {
+        this.ispublic = ispublic;
+    }
+
+    public void setEditConfig(long idEdit, String nome, String descricao, Boolean ispublic) {
         setIdEdit(idEdit);
         setNome(nome);
         setDescricao(descricao);
-        
+        setIspublic(ispublic);
     }
-
-    
 }

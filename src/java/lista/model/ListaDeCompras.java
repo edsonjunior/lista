@@ -27,7 +27,10 @@ import javax.persistence.Table;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "findListByUser", query = "select l from ListaDeCompras l join l.usuarios u where u.id = :id")
+    @NamedQuery(name = "findListByUser", query = "select l from ListaDeCompras l join l.usuarios u where u.id = :id"),
+    @NamedQuery(name = "findListPrivateByUser", query = "select l from ListaDeCompras l join l.usuarios u where u.id = :id and l.ispublic LIKE 0"),
+    @NamedQuery(name = "findListSharedByUser", query = "select l from ListaDeCompras l join l.usuarios u where u.id = :id and l.ispublic LIKE 1"),
+    @NamedQuery(name = "findListSharedByUserGeneral", query = "select l from ListaDeCompras l where l.ispublic LIKE 1")
 })
 @Table(name = "listaDeCompras")
 public class ListaDeCompras {
@@ -41,6 +44,9 @@ public class ListaDeCompras {
     
     @Column(name = "descricao", nullable = false)
     private String descricao;
+    
+    @Column(name = "ispublic", nullable = false)
+    private Boolean ispublic;
     
     @ElementCollection
     @CollectionTable(name = "itemsLista")
@@ -56,9 +62,10 @@ public class ListaDeCompras {
     public ListaDeCompras() {
     }
     
-    public ListaDeCompras(String nome, String descricao) {
+    public ListaDeCompras(String nome, String descricao, Boolean ispublic) {
         this.nome = nome;
         this.descricao = descricao;
+        this.ispublic = ispublic;
     }
 
     public long getId() {
@@ -101,6 +108,11 @@ public class ListaDeCompras {
         this.descricao = descricao;
     }
     
-    
-    
+    public Boolean getIspublic() {
+        return ispublic;
+    }
+
+    public void setIspublic(Boolean ispublic) {
+        this.ispublic = ispublic;
+    }
 }

@@ -23,8 +23,8 @@ public class ListaComprasBean  implements Serializable {
     @EJB
     private ListaDeComprasRepositorio listaRepositorio;
     
-    public ListaDeCompras addLista(String nome, String descricao, Usuario usuarioLista) {
-        ListaDeCompras lista = new ListaDeCompras(nome, descricao);
+    public ListaDeCompras addLista(String nome, String descricao, Boolean ispublic, Usuario usuarioLista) {
+        ListaDeCompras lista = new ListaDeCompras(nome, descricao, ispublic);
         lista.getUsuarios().add(usuarioLista);
         
         listaRepositorio.addLista(lista);
@@ -32,13 +32,25 @@ public class ListaComprasBean  implements Serializable {
         return lista;
     }
     
-    public void editLista(long editId, String nome, String descricao) {
-        listaRepositorio.updateLista(editId, nome, descricao);
+    public void editLista(long editId, String nome, String descricao, Boolean ispublic) {
+        listaRepositorio.updateLista(editId, nome, descricao, ispublic);
         
     }
     
     public List<ListaDeCompras> getListaByUser(Usuario user) {
         return listaRepositorio.getListaByUser(user);
+    }
+    
+    public List<ListaDeCompras> getListaSharedByUser(Usuario user) {
+        return listaRepositorio.getListaSharedByUser(user);
+    }
+    
+    public List<ListaDeCompras> getListaSharedByUserGeneral() {
+        return listaRepositorio.getListaSharedByUserGeneral();
+    }
+    
+    public List<ListaDeCompras> getListaPrivateByUser(Usuario user) {
+        return listaRepositorio.getListaPrivateByUser(user);
     }
     
     public void deleteLista(ListaDeCompras lista) {
